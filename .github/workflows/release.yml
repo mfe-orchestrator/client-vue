@@ -53,12 +53,12 @@ jobs:
             # bare E404 from the resolver.
             - name: Check the core package is published
               run: |
-                  core_range="$(jq -r '.dependencies["@mfe-orchestrator-hub/client"]' package.json)"
-                  if ! npm view "@mfe-orchestrator-hub/client@${core_range}" version >/dev/null 2>&1; then
-                      echo "::error::No @mfe-orchestrator-hub/client matching ${core_range} on the registry. The core is released before its adapters: publish client-core first, then tag this repository again."
+                  core_range="$(jq -r '.dependencies["@mfe-orchestrator/client"]' package.json)"
+                  if ! npm view "@mfe-orchestrator/client@${core_range}" version >/dev/null 2>&1; then
+                      echo "::error::No @mfe-orchestrator/client matching ${core_range} on the registry. The core is released before its adapters: publish client-core first, then tag this repository again."
                       exit 1
                   fi
-                  echo "Found @mfe-orchestrator-hub/client@${core_range}."
+                  echo "Found @mfe-orchestrator/client@${core_range}."
 
             # The lockfile is only committed once the core is on the registry: until then it could
             # only record a local link, which would be a lie in CI. Frozen when it exists.

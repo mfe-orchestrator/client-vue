@@ -1,6 +1,6 @@
-# @mfe-orchestrator-hub/client-vue
+# @mfe-orchestrator/client-vue
 
-Vue 3 bindings for [`@mfe-orchestrator-hub/client`](https://github.com/mfe-orchestrator/client-core).
+Vue 3 bindings for [`@mfe-orchestrator/client`](https://github.com/mfe-orchestrator/client-core).
 
 Ergonomics only. Every decision — which version is served, how the manifest is fetched, how the
 identities are kept — lives in the core. This package is a plugin and two composables.
@@ -8,16 +8,16 @@ identities are kept — lives in the core. This package is a plugin and two comp
 ## Install
 
 ```sh
-pnpm add @mfe-orchestrator-hub/client-vue
+pnpm add @mfe-orchestrator/client-vue
 ```
 
-`@mfe-orchestrator-hub/client` comes along as a dependency. `vue` is a peer dependency (3.3 or later).
+`@mfe-orchestrator/client` comes along as a dependency. `vue` is a peer dependency (3.3 or later).
 
 ## Usage
 
 ```ts
 import { createApp } from "vue"
-import { createOrchestrator } from "@mfe-orchestrator-hub/client-vue"
+import { createOrchestrator } from "@mfe-orchestrator/client-vue"
 import App from "./App.vue"
 
 createApp(App)
@@ -38,7 +38,7 @@ It stays a convenience. The recommended place is still the very top of the entry
 bundler may import a remote before the app is created:
 
 ```ts
-import { configure } from "@mfe-orchestrator-hub/client"
+import { configure } from "@mfe-orchestrator/client"
 
 configure({ backendUrl: "…", projectId: "…", environment: "…" })
 ```
@@ -47,7 +47,7 @@ configure({ backendUrl: "…", projectId: "…", environment: "…" })
 
 ```vue
 <script setup lang="ts">
-import { useRemoteUrl } from "@mfe-orchestrator-hub/client-vue"
+import { useRemoteUrl } from "@mfe-orchestrator/client-vue"
 
 const { data: url, error, loading } = useRemoteUrl("checkout-new")
 </script>
