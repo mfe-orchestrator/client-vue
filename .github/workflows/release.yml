@@ -1,0 +1,83 @@
+name: Release
+
+on:
+    push:
+        tags:
+            - "v*"
+    workflow_dispatch:
+
+permissions:
+    contents: read
+    id-token: write # npm provenance signs the package with this
+
+jobs:
+    publish:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+
+            # Both guards run before any toolchain setup: a release that cannot succeed should say so
+            # in seconds, not after a full install and build.
+            - name: Check the tag matches the package version
+              if: github.ref_type == 'tag'
+              run: |
+                  tag_version="${GITHUB_REF_NAME#v}"
+                  package_version="$(jq -r .version package.json)"
+                  if [ "$tag_version" != "$package_version" ]; then
+                      echo "::error::Tag ${GITHUB_REF_NAME} asks for ${tag_version} but package.json says ${package_version}. Publishing a version that disagrees with its tag cannot be undone on npm, so nothing was published: align the two and tag again."
+                      exit 1
+                  fi
+                  echo "Tag ${GITHUB_REF_NAME} matches package.json ${package_version}."
+
+            - name: Check the npm token is available
+              env:
+                  NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+              run: |
+                  if [ -z "${NODE_AUTH_TOKEN}" ]; then
+                      echo "::error::NPM_TOKEN is empty for this run. Add it as an organization secret and let this repository read it, otherwise the publish would fail later with an opaque npm 401."
+                      exit 1
+                  fi
+                  echo "NPM_TOKEN is present."
+
+            # No version input: pnpm/action-setup reads packageManager from package.json.
+            - uses: pnpm/action-setup@v4
+
+            - uses: actions/setup-node@v4
+              with:
+                  node-version: 20
+                  cache: pnpm
+                  registry-url: https://registry.npmjs.org
+
+            # The core has to be on the registry before any adapter can be installed, let alone
+            # built. Checked up front so the run says which package is missing, instead of dying on a
+            # bare E404 from the resolver.
+            - name: Check the core package is published
+              run: |
+                  core_range="$(jq -r '.dependencies["@mfe-orchestrator-hub/client"]' package.json)"
+                  if ! npm view "@mfe-orchestrator-hub/client@${core_range}" version >/dev/null 2>&1; then
+                      echo "::error::No @mfe-orchestrator-hub/client matching ${core_range} on the registry. The core is released before its adapters: publish client-core first, then tag this repository again."
+                      exit 1
+                  fi
+                  echo "Found @mfe-orchestrator-hub/client@${core_range}."
+
+            # The lockfile is only committed once the core is on the registry: until then it could
+            # only record a local link, which would be a lie in CI. Frozen when it exists.
+            - name: Install dependencies
+              run: |
+                  if [ -f pnpm-lock.yaml ]; then
+                      pnpm install --frozen-lockfile
+                  else
+                      echo "No pnpm-lock.yaml committed yet, resolving from package.json."
+                      pnpm install --no-frozen-lockfile
+                  fi
+
+            - name: Typecheck
+              run: pnpm typecheck
+
+            - name: Build
+              run: pnpm build
+
+            - name: Publish to npm
+              run: npm publish --provenance --access public
+              env:
+                  NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
