@@ -43,6 +43,32 @@ import { configure } from "@mfe-orchestrator-hub/client"
 configure({ backendUrl: "…", projectId: "…", environment: "…" })
 ```
 
+### `environment` is optional
+
+Leave it out and the backend picks the environment from the domain the host page is served on:
+
+```ts
+createApp(App)
+    .use(
+        createOrchestrator({
+            backendUrl: import.meta.env.VITE_MFE_BACKEND_URL,
+            projectId: import.meta.env.VITE_MFE_PROJECT_ID
+        })
+    )
+    .mount("#app")
+```
+
+One build then serves every environment, and there is no `VITE_MFE_ENVIRONMENT` to keep in sync with
+the domain it is deployed to. The price is that the environment has to be mapped to a domain in the
+console: an unmapped domain has no environment to resolve to and the manifest request fails.
+
+Passing `environment` keeps the old behaviour and always wins over the domain. Nothing changes for
+an app that already sets it.
+
+This adapter never reads the field. It re-exports the core's `OrchestratorConfig` and hands the
+configuration over untouched, so which of the two the backend is asked for is decided entirely in
+[the core](https://github.com/mfe-orchestrator/client-core#configuration).
+
 ### `useRemoteUrl(slug)`
 
 ```vue
