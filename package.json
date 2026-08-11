@@ -1,7 +1,7 @@
 {
-    "name": "@mfe-orchestrator/client-vue",
+    "name": "@mfe-orchestrator-hub/client-vue",
     "version": "0.1.0",
-    "description": "Vue bindings for @mfe-orchestrator/client: plugin and composables over the MFE Orchestrator client",
+    "description": "Vue bindings for @mfe-orchestrator-hub/client: plugin and composables over the MFE Orchestrator client",
     "license": "MIT",
     "author": "Lorenzo De Francesco",
     "type": "module",
@@ -56,7 +56,7 @@
         "prepublishOnly": "pnpm build"
     },
     "dependencies": {
-        "@mfe-orchestrator/client": "^0.1.0"
+        "@mfe-orchestrator-hub/client": "^0.1.0"
     },
     "peerDependencies": {
         "vue": "^3.3.0"

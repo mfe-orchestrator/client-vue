@@ -1,7 +1,7 @@
-import { configure, globalVariables, type OrchestratorConfig, remoteUrl } from "@mfe-orchestrator/client"
+import { configure, globalVariables, type OrchestratorConfig, remoteUrl } from "@mfe-orchestrator-hub/client"
 import { getCurrentScope, type MaybeRefOrGetter, onScopeDispose, type Plugin, type Ref, ref, toValue, watchEffect } from "vue"
 
-export type { GlobalVariable, Identities, Manifest, Microfrontend, OrchestratorConfig } from "@mfe-orchestrator/client"
+export type { GlobalVariable, Identities, Manifest, Microfrontend, OrchestratorConfig } from "@mfe-orchestrator-hub/client"
 
 /** The state of one asynchronous read from the core, as refs. */
 export interface AsyncState<TValue> {
@@ -55,7 +55,7 @@ const useAsync = <TValue>(task: () => Promise<TValue>): AsyncState<TValue> => {
 }
 
 /**
- * The Vue plugin. Hands the configuration to `@mfe-orchestrator/client` as the app is installed.
+ * The Vue plugin. Hands the configuration to `@mfe-orchestrator-hub/client` as the app is installed.
  *
  * `configure()` is idempotent, so installing the plugin twice is harmless. It stays a convenience:
  * the recommended place is still the very top of the entry point, since a bundler may import a

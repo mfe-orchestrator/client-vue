@@ -28,5 +28,5 @@ coverage/
 # Output of npm pack
 *.tgz
 
-# Regenerated once @mfe-orchestrator/client is on the registry
+# Regenerated once @mfe-orchestrator-hub/client is on the registry
 pnpm-lock.yaml
