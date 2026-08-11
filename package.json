@@ -1,6 +1,6 @@
 {
     "name": "@mfe-orchestrator-hub/client-vue",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "description": "Vue bindings for @mfe-orchestrator-hub/client: plugin and composables over the MFE Orchestrator client",
     "license": "MIT",
     "author": "Lorenzo De Francesco",
