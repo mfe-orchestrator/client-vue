@@ -140,6 +140,7 @@ talks to the core directly — see the
 
 ```sh
 pnpm install
+pnpm test        # vitest
 pnpm build       # tsup, ESM + CJS + types
 pnpm typecheck
 ```
