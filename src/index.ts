@@ -19,6 +19,28 @@ const declareIntegration = (): void => {
 
 declareIntegration()
 
+/**
+ * Replaces the logged in user, so a *User* canary is decided on the new one from the next resolution
+ * on. Pass `undefined` on logout. It drops the memoized manifest of the core, which a second
+ * `configure()` deliberately does not.
+ *
+ * Remotes already imported keep the version drawn for the previous user: the federation runtime holds
+ * the container it loaded. Resolve your remotes behind your own auth guard, or reload after the switch.
+ *
+ * Guarded like `registerIntegration`: a host still on a core that predates this call gets a warning
+ * naming the upgrade, not a crash on an import that resolves to undefined.
+ */
+export const setUserId = (userId: OrchestratorConfig["userId"]): void => {
+    const call = (orchestrator as unknown as { setUserId?: (value: OrchestratorConfig["userId"]) => void }).setUserId
+    if (!call) {
+        console.warn(
+            "[@mfe-orchestrator-hub/client-vue] setUserId() is not available in the installed @mfe-orchestrator-hub/client, so the user was not changed and the canary still sees the previous one. Upgrade that package."
+        )
+        return
+    }
+    call(userId)
+}
+
 /** The state of one asynchronous read from the core, as refs. */
 export interface AsyncState<TValue> {
     data: Ref<TValue | undefined>

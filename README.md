@@ -111,6 +111,25 @@ interface AsyncState<TValue> {
 They read the one memoized manifest of the core, so N composables across N components still cost a
 single network request.
 
+### `setUserId(userId)`
+
+The logged-in user is what a *User* canary is decided on, and it is the one thing that changes while
+the page is alive. A second `configure()` is ignored on purpose, so it has its own call:
+
+```ts
+import { setUserId } from "@mfe-orchestrator-hub/client-vue"
+
+watch(() => auth.user?.id, id => setUserId(id))  // undefined on logout: back to the stable version
+```
+
+It drops the memoized manifest, so the next `useRemoteUrl()` is answered for the new user. Remotes
+**already imported** keep the version drawn for the previous one — the federation runtime holds the
+container it loaded — so resolve them behind your own navigation guard, or reload the page after the
+switch.
+
+Needs a `@mfe-orchestrator-hub/client` that exposes `setUserId()`. On an older core the call warns and
+does nothing rather than crashing.
+
 ### With module federation
 
 The composables are for the app's own logic. The remote itself is wired in the bundler config, which
