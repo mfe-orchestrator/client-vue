@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@mfe-orchestrator-hub/client':
-        specifier: ^0.1.2
-        version: 0.1.2
+        specifier: ^0.2.0
+        version: 0.2.0
     devDependencies:
       '@biomejs/biome':
         specifier: ^2.5.7
@@ -269,8 +269,8 @@ packages:
   '@jridgewell/trace-mapping@0.3.31':
     resolution: {integrity: sha512-zzNR+SdQSDJzc8joaeP8QQoCQr8NuYx2dIIytl1QeBEZHJ9uW6hebsrYgbz8hJwUQao3TWCMtmfV8Nu1twOLAw==}
 
-  '@mfe-orchestrator-hub/client@0.1.2':
-    resolution: {integrity: sha512-It731/y1jXu744Bpbebv//dlUMymwH2nzF4OkhKdVHIb8l1kYJygrkgQV1ES9SUH3y9RnkZhbLFlPND+UQzJRg==}
+  '@mfe-orchestrator-hub/client@0.2.0':
+    resolution: {integrity: sha512-CkpgwVjLR6QLZjZI5E/kytGGOJHUB1Kc7Ewj0EWMPKLR2UhnUR3QIAOzsMRar9TO0nOlJeiZpXqNXdbEgZIZ1Q==}
     engines: {node: '>=20.0.0'}
 
   '@napi-rs/lzma-linux-x64-gnu@1.5.1':
@@ -1148,7 +1148,7 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.5
 
-  '@mfe-orchestrator-hub/client@0.1.2': {}
+  '@mfe-orchestrator-hub/client@0.2.0': {}
 
   '@napi-rs/lzma-linux-x64-gnu@1.5.1':
     optional: true
