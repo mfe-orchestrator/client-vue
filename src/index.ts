@@ -2,7 +2,7 @@ import * as orchestrator from "@mfe-orchestrator-hub/client"
 import { configure, globalVariables, type OrchestratorConfig, remoteUrl } from "@mfe-orchestrator-hub/client"
 import { getCurrentScope, type MaybeRefOrGetter, onScopeDispose, type Plugin, type Ref, ref, toValue, watchEffect } from "vue"
 
-export type { GlobalVariable, Identities, Manifest, Microfrontend, OrchestratorConfig } from "@mfe-orchestrator-hub/client"
+export type { Frontend, GlobalVariable, Identities, Manifest, OrchestratorConfig } from "@mfe-orchestrator-hub/client"
 
 /**
  * Tells the core that the host configures the client through this package, so a missing or invalid

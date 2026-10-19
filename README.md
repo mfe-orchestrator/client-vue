@@ -1,7 +1,7 @@
 # @mfe-orchestrator-hub/client-vue
 
 **Part of [MFE Orchestrator](https://mfe-orchestrator.dev)** — the control plane for your
-microfrontends. The site is the short version; the
+frontends. The site is the short version; the
 [documentation](https://mfe-orchestrator.dev/documentation/docs/integration/client-sdk) is where this
 package sits in context: environments, deployments, canary releases.
 
