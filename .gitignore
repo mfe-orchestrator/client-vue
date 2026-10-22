@@ -27,3 +27,4 @@ coverage/
 
 # Output of npm pack
 *.tgz
+.omc/
